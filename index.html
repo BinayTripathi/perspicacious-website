@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perspicacious IT Services | Software Engineering & Solution Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1220;
+    --charcoal:#0B1220;
+    --charcoal-deep:#05070D;
+    --amber:#8B5CF6;
+    --amber-light:#22C7E8;
+    --rust:#3B5FFF;
+    --sage:#8B5CF6;
+    --cream:#F5F6FB;
+    --paper:#F5F6FB;
+    --text:#12131A;
+    --gray:#5B6472;
+    --line:#E7E8EE;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--text);
+    background:#fff;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Sora', sans-serif;}
+  a{color:inherit;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  section{padding:80px 0;}
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:60;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0;
+  }
+  .logo{
+    font-weight:700; font-size:17px; letter-spacing:.01em;
+    color:var(--ink);
+    display:flex; align-items:center; gap:10px;
+    font-family:'Sora', sans-serif;
+  }
+  .logo .mark{flex-shrink:0;}
+  .navlinks{display:flex; gap:32px; font-size:14.5px; font-weight:500;}
+  .navlinks a{text-decoration:none; color:var(--text); transition:color .15s;}
+  .navlinks a:hover{color:var(--rust);}
+  .nav-cta{
+    background:linear-gradient(90deg,var(--rust),var(--amber)); color:#fff;
+    padding:11px 22px; border-radius:8px;
+    font-size:14px; font-weight:700; text-decoration:none;
+    box-shadow:0 8px 20px -10px rgba(59,95,255,.5);
+    transition:transform .15s ease;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{transform:translateY(-1px);}
+  .nav-right{display:flex; align-items:center; gap:18px;}
+
+  .burger{
+    display:none;
+    width:38px; height:38px;
+    border:1px solid var(--line); border-radius:8px;
+    background:#fff;
+    align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  .burger span, .burger span::before, .burger span::after{
+    content:''; display:block; width:18px; height:2px; background:var(--ink);
+    position:relative; transition:transform .2s ease, opacity .2s ease;
+  }
+  .burger span::before{position:absolute; top:-6px;}
+  .burger span::after{position:absolute; top:6px;}
+  .mobile-menu{
+    display:none;
+    flex-direction:column;
+    padding:8px 24px 20px;
+    border-top:1px solid var(--line);
+    background:#fff;
+  }
+  .mobile-menu a{
+    text-decoration:none; color:var(--text); font-size:15px; font-weight:500;
+    padding:13px 0; border-bottom:1px solid var(--line);
+  }
+  .mobile-menu.open{display:flex;}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    padding:120px 0 90px;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .hero-bg{position:absolute; inset:0; z-index:-1;}
+  .hero-bg-img{width:100%; height:100%; object-fit:cover; filter:saturate(1.05) sepia(.08);}
+  .hero-bg-overlay{
+    position:absolute; inset:0;
+    background:linear-gradient(100deg, rgba(20,16,12,.96) 0%, rgba(20,16,12,.92) 38%, rgba(24,19,14,.7) 60%, rgba(24,19,14,.35) 85%, rgba(24,19,14,.2) 100%);
+  }
+  .hero-bg-overlay::after{
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(560px 380px at 12% 10%, rgba(59,95,255,.25), transparent 60%),
+      radial-gradient(480px 360px at 92% 88%, rgba(139,92,246,.22), transparent 60%);
+    mix-blend-mode:screen;
+  }
+  .hero-content{max-width:700px; position:relative;}
+  .hero-content h1, .hero-content p, .hero-content .hero-note{
+    text-shadow:0 2px 18px rgba(0,0,0,.45);
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,.1); color:var(--amber-light);
+    font-size:12.5px; font-weight:600; letter-spacing:.03em;
+    padding:7px 14px; border-radius:20px; margin-bottom:22px;
+    border:1px solid rgba(255,255,255,.16);
+  }
+  .eyebrow::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--sage); box-shadow:0 0 0 3px rgba(139,92,246,.25);}
+  h1{
+    font-size:clamp(30px,5.6vw,52px);
+    font-weight:700;
+    line-height:1.14;
+    color:#fff;
+    letter-spacing:-.01em;
+  }
+  h1 .accent{
+    background:linear-gradient(90deg, var(--amber-light), var(--rust));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p{
+    font-size:16px; color:rgba(255,255,255,.92); margin:22px 0 30px; max-width:560px;
+  }
+  .hero-cta{display:flex; gap:14px; flex-wrap:wrap;}
+  .hero-note{
+    margin-top:26px; padding-top:22px; border-top:1px solid rgba(255,255,255,.22);
+    font-size:13.5px; color:rgba(255,255,255,.82); max-width:460px;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 24px; border-radius:8px;
+    font-size:14.5px; font-weight:600; text-decoration:none;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn-primary{background:linear-gradient(90deg,var(--rust),var(--amber)); color:#fff; box-shadow:0 10px 30px -10px rgba(59,95,255,.5);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 14px 34px -8px rgba(59,95,255,.65);}
+  .btn-outline{border:1.5px solid rgba(255,255,255,.35); color:#fff;}
+  .btn-outline:hover{border-color:#fff; background:rgba(255,255,255,.08);}
+
+  /* FEATURE STRIP */
+  .feature-strip{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:#fff;
+  }
+  .feature-grid{
+    display:grid; grid-template-columns:repeat(4,1fr);
+  }
+  .feature-item{
+    padding:28px 24px;
+    border-right:1px solid var(--line);
+  }
+  .feature-item:last-child{border-right:none;}
+  .feature-item .ic{
+    width:40px; height:40px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:14px; font-size:18px; color:#fff;
+  }
+  .feature-item:nth-child(1) .ic{background:linear-gradient(135deg,var(--rust),var(--amber));}
+  .feature-item:nth-child(2) .ic{background:linear-gradient(135deg,var(--amber),var(--amber-light));}
+  .feature-item:nth-child(3) .ic{background:linear-gradient(135deg,var(--sage),#B08CFB);}
+  .feature-item:nth-child(4) .ic{background:linear-gradient(135deg,#FF6B6B,#FF9B7A);}
+  .feature-item h4{font-size:15px; font-weight:600; color:var(--ink); margin-bottom:6px; font-family:'Inter',sans-serif;}
+  .feature-item p{font-size:13.5px; color:var(--gray);}
+
+  /* SECTION SHARED */
+  .sec-head{max-width:640px; margin:0 auto 48px; text-align:center;}
+  .sec-tag{
+    font-size:12.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    background:linear-gradient(90deg,var(--rust),var(--amber));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    margin-bottom:12px; display:inline-block;
+    font-family:'Inter',sans-serif;
+  }
+  h2{font-size:clamp(24px,4vw,36px); font-weight:700; color:var(--ink); letter-spacing:-.01em;}
+  .sec-head p{color:var(--gray); font-size:15px; margin-top:14px;}
+  .bg-alt{background:var(--paper);}
+
+  /* SERVICES GRID */
+  .services-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:22px;
+  }
+  .service-card{
+    background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:28px 26px;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .service-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 24px 44px -24px rgba(59,95,255,.35);
+    border-color:transparent;
+  }
+  .service-card .num{
+    font-family:'Sora', sans-serif; font-weight:700; font-size:14px;
+    background:linear-gradient(90deg,var(--rust),var(--amber));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    margin-bottom:16px;
+  }
+  .service-card h3{font-size:18px; font-weight:700; color:var(--ink); margin-bottom:10px;}
+  .service-card p{font-size:14px; color:var(--gray);}
+
+  /* PRODUCTS */
+  .products-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  .product-card{
+    border-radius:16px; padding:32px;
+    background:linear-gradient(135deg,var(--charcoal),var(--charcoal-deep));
+    color:#fff;
+    position:relative; overflow:hidden;
+  }
+  .product-card::after{
+    content:''; position:absolute; width:260px; height:260px;
+    background:radial-gradient(circle, rgba(59,95,255,.35), transparent 70%);
+    top:-80px; right:-80px;
+  }
+  .product-card.alt{background:linear-gradient(135deg,#3B2F8C,#1F1550);}
+  .product-card.alt::after{background:radial-gradient(circle, rgba(139,92,246,.5), transparent 70%);}
+  .product-tag{
+    display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    background:rgba(255,255,255,.14); padding:6px 12px; border-radius:20px; margin-bottom:18px;
+    font-family:'Inter',sans-serif;
+  }
+  .product-card h3{font-size:22px; font-weight:700; margin-bottom:12px; position:relative;}
+  .product-card p{font-size:14.5px; opacity:.85; margin-bottom:20px; position:relative; max-width:420px;}
+  .product-card ul{list-style:none; position:relative; font-size:13.5px;}
+  .product-card li{padding:8px 0; border-top:1px solid rgba(255,255,255,.16); display:flex; gap:10px; opacity:.92;}
+  .product-card li::before{content:'✓'; color:var(--amber-light); font-weight:700;}
+
+  /* CLIENTS */
+  .client-marquee{overflow:hidden; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .client-track{
+    display:flex; gap:0; width:max-content;
+    animation:slide 28s linear infinite;
+  }
+  @keyframes slide{0%{transform:translateX(0);} 100%{transform:translateX(-50%);}}
+  .client-chip{
+    padding:24px 40px; font-family:'Sora', sans-serif; font-weight:700; font-size:18px;
+    color:var(--ink); opacity:.5; white-space:nowrap;
+    border-right:1px solid var(--line);
+    transition:opacity .15s ease;
+  }
+  .client-chip:hover{opacity:1;}
+  .client-chip small{
+    display:block; font-family:'Inter',sans-serif; font-weight:500; font-size:10.5px;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--gray); margin-top:3px;
+  }
+
+  /* ABOUT / FOUNDER */
+  .about-grid{display:grid; grid-template-columns:.85fr 1.15fr; gap:48px; align-items:center;}
+  .about-card{
+    background:linear-gradient(160deg,var(--charcoal),var(--charcoal-deep)); border-radius:18px; padding:32px; color:#fff;
+  }
+  .about-card .avatar{
+    width:56px; height:56px; border-radius:50%;
+    background:linear-gradient(135deg,var(--amber),var(--rust));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Sora', sans-serif; font-weight:800; font-size:20px;
+    margin-bottom:18px;
+  }
+  .about-card .name{font-family:'Sora', sans-serif; font-size:19px; font-weight:700;}
+  .about-card .cred{font-size:12.5px; opacity:.7; margin-top:4px;}
+  .about-card .divider{height:1px; background:rgba(255,255,255,.16); margin:20px 0;}
+  .about-card .row{display:flex; justify-content:space-between; font-size:13px; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.1); gap:10px;}
+  .about-card .row span:first-child{opacity:.6;}
+  .about-text p{color:var(--gray); font-size:15px; margin-bottom:16px;}
+  .about-text p:first-child{color:var(--text); font-size:16.5px; font-weight:500;}
+
+  /* CONTACT */
+  .contact-section{background:linear-gradient(160deg,var(--charcoal-deep),#1B140E); color:#fff;}
+  .contact-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:48px;}
+  .contact-info h2{color:#fff;}
+  .contact-info p{color:rgba(255,255,255,.65); margin:16px 0 26px; font-size:15px;}
+  .contact-detail{display:flex; gap:14px; margin-bottom:20px; align-items:flex-start;}
+  .contact-detail .ic{
+    width:38px; height:38px; border-radius:10px;
+    background:linear-gradient(135deg, rgba(59,95,255,.35), rgba(139,92,246,.35));
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px;
+  }
+  .contact-detail h5{font-size:11px; text-transform:uppercase; letter-spacing:.06em; opacity:.55; margin-bottom:4px; font-family:'Inter',sans-serif;}
+  .contact-detail p{margin:0; color:#fff; font-size:14.5px;}
+  .contact-detail a{text-decoration:none;}
+  .contact-detail a:hover{color:var(--amber-light);}
+
+  .contact-form{
+    background:#fff; border-radius:14px; padding:30px; color:var(--text);
+  }
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;}
+  .field{display:flex; flex-direction:column; gap:7px;}
+  .field label{font-size:12.5px; font-weight:600; color:var(--ink);}
+  .field input, .field select, .field textarea{
+    border:1px solid var(--line); border-radius:7px; padding:11px 13px;
+    font-family:'Inter', sans-serif; font-size:14px; color:var(--text);
+    background:var(--paper);
+    width:100%;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:2px solid var(--amber); outline-offset:1px; background:#fff;
+  }
+  .field.full{grid-column:1/-1;}
+  .submit-btn{
+    width:100%; background:linear-gradient(90deg,var(--rust),var(--amber)); color:#fff; border:none;
+    padding:14px; border-radius:8px; font-size:15px; font-weight:700;
+    cursor:pointer; transition:transform .15s ease, box-shadow .15s ease; margin-top:6px;
+    box-shadow:0 10px 26px -10px rgba(59,95,255,.5);
+  }
+  .submit-btn:hover{transform:translateY(-2px);}
+  .submit-btn:disabled{opacity:.7; cursor:not-allowed; transform:none;}
+  .form-status{
+    margin-top:12px; font-size:13px; text-align:center; min-height:16px;
+  }
+  .form-status.success{color:#1B8A5A;}
+  .form-status.error{color:#C0392B;}
+
+  footer{
+    background:var(--charcoal-deep); color:rgba(255,255,255,.55);
+    padding:24px 0; border-top:1px solid rgba(255,255,255,.08);
+    font-size:12.5px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  footer .tagline{color:rgba(255,255,255,.35); font-style:italic;}
+
+  /* ---------------- RESPONSIVE ---------------- */
+  @media (max-width:960px){
+    .about-grid, .contact-grid{grid-template-columns:1fr;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+  }
+
+  @media (max-width:720px){
+    .wrap{padding:0 20px;}
+    section{padding:56px 0;}
+    .navlinks{display:none;}
+    .burger{display:flex;}
+    .hero{padding:44px 0 56px;}
+    .feature-grid{grid-template-columns:repeat(2,1fr);}
+    .feature-item{border-right:none; border-bottom:1px solid var(--line);}
+    .feature-item:nth-child(2n){border-right:none;}
+    .services-grid{grid-template-columns:1fr;}
+    .products-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .hero-cta{flex-direction:column; align-items:stretch;}
+    .hero-cta .btn{justify-content:center;}
+    .sec-head{text-align:left; margin-left:0; margin-right:0;}
+    .contact-form{padding:24px;}
+    .about-card, .product-card{padding:26px;}
+    footer .wrap{flex-direction:column; text-align:center;}
+    .logo{font-size:14px;}
+  }
+
+  @media (max-width:480px){
+    h1{font-size:28px;}
+    h2{font-size:23px;}
+    .eyebrow{font-size:11.5px;}
+    .hero p{font-size:15px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">
+        <svg class="mark" width="28" height="28" viewBox="0 0 90 90" aria-hidden="true">
+          <defs>
+            <linearGradient id="navLogoGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#3B5FFF"/>
+              <stop offset="1" stop-color="#8B5CF6"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="90" height="90" rx="18" fill="url(#navLogoGrad)"/>
+          <path d="M22 66 L22 24 L48 24 A18 18 0 0 1 48 60 L34 60" fill="none" stroke="#F6F1E7" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="66" cy="66" r="5" fill="#F6F1E7"/>
+        </svg>
+        PERSPICACIOUS IT SERVICES
+      </div>
+      <div class="navlinks">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#products">Products</a>
+        <a href="#clients">Clients</a>
+        <a href="#about">About</a>
+      </div>
+      <div class="nav-right">
+        <a href="#contact" class="nav-cta">Get In Touch</a>
+        <button class="burger" id="burgerBtn" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+      </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#products">Products</a>
+      <a href="#clients">Clients</a>
+      <a href="#about">About</a>
+      <a href="#contact">Get In Touch</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?fm=jpg&amp;q=80&amp;w=1800&amp;auto=format&amp;fit=crop" alt="Software engineering workspace" class="hero-bg-img">
+    <div class="hero-bg-overlay"></div>
+  </div>
+  <div class="wrap hero-content">
+    <div class="eyebrow">Available for new engagements</div>
+    <h1>Engineering <span class="accent">Reliable Software</span> for Regulated Industries</h1>
+    <p>Perspicacious IT Services bridges full-stack engineering with cloud-native solution architecture to build the low-latency systems banking, insurance and betting platforms depend on.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">Get In Touch →</a>
+      <a href="#services" class="btn btn-outline">Explore Services</a>
+    </div>
+    <p class="hero-note"><strong style="color:#fff; font-family:'Sora',sans-serif;">15 years</strong> engineering production systems in banking, insurance, betting and automotive.</p>
+  </div>
+</section>
+
+<div class="feature-strip">
+  <div class="wrap">
+    <div class="feature-grid">
+      <div class="feature-item">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L4 5v6c0 5 3.4 8.9 8 10 4.6-1.1 8-5 8-10V5l-8-3z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 12l2.4 2.4L15.5 9.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h4>Quality Assurance</h4>
+        <p>Rigorous engineering practice built for regulated, audit-heavy environments.</p>
+      </div>
+      <div class="feature-item">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 18h10a4 4 0 0 0 .5-7.97A5.5 5.5 0 0 0 7.1 9.02 4 4 0 0 0 7 18z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        <h4>Cloud-Native Delivery</h4>
+        <p>AWS-first architecture with Infrastructure as Code from day one.</p>
+      </div>
+      <div class="feature-item">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 11l4-3 3 2h3l3-2 4 3" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 11v3l4 3 3.5-2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 11v3l-4 3-3.5-2.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 13.5l2 1.5 2-1.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h4>Hands-On Leadership</h4>
+        <p>No account-manager layer — engagements led directly by the engineer.</p>
+      </div>
+      <div class="feature-item">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="7" width="10" height="10" rx="1.5" stroke="#fff" stroke-width="1.8"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.5 5.5l2 2M16.5 16.5l2 2M5.5 18.5l2-2M16.5 7.5l2-2" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="2" fill="#fff"/></svg></div>
+        <h4>AI-Augmented Builds</h4>
+        <p>LLM and agentic workflows applied where they genuinely cut effort.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">What We Do</div>
+      <h2>Our Core Services</h2>
+      <p>Delivering comprehensive engineering capability across full-stack development, cloud architecture, and applied AI.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="num">01</div>
+        <h3>Solution Architecture</h3>
+        <p>System design, technology selection and vendor evaluation for platforms that need to scale reliably under regulation.</p>
+      </div>
+      <div class="service-card">
+        <div class="num">02</div>
+        <h3>Full-Stack Engineering</h3>
+        <p>End-to-end build of backend services and front-end applications — Java, Spring Boot, Node.js, Python and React.</p>
+      </div>
+      <div class="service-card">
+        <div class="num">03</div>
+        <h3>Cloud &amp; DevOps</h3>
+        <p>Cloud-native infrastructure on AWS, Infrastructure as Code, and CI/CD pipelines that keep releases fast and safe.</p>
+      </div>
+      <div class="service-card">
+        <div class="num">04</div>
+        <h3>Low-Latency Systems</h3>
+        <p>High-throughput, low-latency backends built for environments where milliseconds and correctness both matter.</p>
+      </div>
+      <div class="service-card">
+        <div class="num">05</div>
+        <h3>Applied AI &amp; ML</h3>
+        <p>LLM-based and agentic workflow tooling, plus ML-driven automation for classification, triage and decisioning.</p>
+      </div>
+      <div class="service-card">
+        <div class="num">06</div>
+        <h3>Process Automation</h3>
+        <p>Automating manual workflows in underwriting, claims and document processing to cut turnaround time and cost.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="products" class="bg-alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">In Market</div>
+      <h2>Built In-House</h2>
+      <p>Two products born from direct experience automating insurance workflows at scale.</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card">
+        <span class="product-tag">PolicyIntel</span>
+        <h3>Insurance Investigation Platform</h3>
+        <p>Built to surface the signals investigators need faster, drawing on ML-based classification for large-scale document review.</p>
+        <ul>
+          <li>Structured case intelligence for investigators</li>
+          <li>ML-assisted document and correspondence triage</li>
+          <li>Built for regulated insurance environments</li>
+        </ul>
+      </div>
+      <div class="product-card alt">
+        <span class="product-tag">PolicyLens</span>
+        <h3>Policy Adjudication Tool</h3>
+        <p>Helping teams read, interpret and apply policy terms consistently, reducing manual review time on inbound claims.</p>
+        <ul>
+          <li>Policy adjudication support for underwriting teams</li>
+          <li>Consistent, auditable decision trails</li>
+          <li>Designed to cut turnaround time on claims review</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="clients" style="padding-bottom:0;">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Trusted By</div>
+      <h2>Organisations We've Worked With</h2>
+      <p>Across banking, insurance, betting, automotive and SaaS.</p>
+    </div>
+  </div>
+  <div class="client-marquee">
+    <div class="client-track">
+      <div class="client-chip">Sportsbet<small>Betting</small></div>
+      <div class="client-chip">Tabcorp<small>Betting</small></div>
+      <div class="client-chip">MLC<small>Insurance</small></div>
+      <div class="client-chip">ANZ Bank<small>Banking</small></div>
+      <div class="client-chip">NAB<small>Banking</small></div>
+      <div class="client-chip">ME Bank<small>Banking</small></div>
+      <div class="client-chip">Ford Motor Company<small>Automotive</small></div>
+      <div class="client-chip">Zendesk<small>SaaS</small></div>
+      <div class="client-chip">ANCA CNC Machines<small>Manufacturing</small></div>
+      <div class="client-chip">Sportsbet<small>Betting</small></div>
+      <div class="client-chip">Tabcorp<small>Betting</small></div>
+      <div class="client-chip">MLC<small>Insurance</small></div>
+      <div class="client-chip">ANZ Bank<small>Banking</small></div>
+      <div class="client-chip">NAB<small>Banking</small></div>
+      <div class="client-chip">ME Bank<small>Banking</small></div>
+      <div class="client-chip">Ford Motor Company<small>Automotive</small></div>
+      <div class="client-chip">Zendesk<small>SaaS</small></div>
+      <div class="client-chip">ANCA CNC Machines<small>Manufacturing</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="bg-alt">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="avatar">BT</div>
+        <div class="name">Binay Tripathi</div>
+        <div class="cred">Founder &amp; Principal Engineer</div>
+        <div class="divider"></div>
+        <div class="row"><span>Experience</span><span>15 years</span></div>
+        <div class="row"><span>Certification</span><span>AWS Certified Solution Architect — 958/1000</span></div>
+        <div class="row" style="border-bottom:none;"><span>Based in</span><span>Ringwood, VIC</span></div>
+      </div>
+      <div class="about-text">
+        <div class="sec-tag">About Us</div>
+        <h2 style="margin-bottom:18px;">Led By The Engineer, Not A Layer Removed</h2>
+        <p>Perspicacious IT Services is led directly by Binay Tripathi, a full-stack engineer and solution architect with 15 years building production systems in banking, insurance, betting and automotive.</p>
+        <p>That means engagements are hands-on from day one: no account-manager layer between the brief and the build. Every project is designed, built and architected personally, with the same rigour applied whether it's a single service or a full platform.</p>
+        <p>Published research in the CADA journal on hierarchical task analysis and biomechanical modeling reflects the same instinct that shapes the engineering work: understand the system fully before touching it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="sec-tag" style="color:var(--amber-light); -webkit-background-clip:initial; background-clip:initial;">Get In Touch</div>
+        <h2>Connect With Our Team</h2>
+        <p>Reach out directly for project proposals, engineering consultations, or partnership inquiries.</p>
+
+        <div class="contact-detail">
+          <div class="ic">✉</div>
+          <div>
+            <h5>Email</h5>
+            <p><a href="mailto:tripathi.binay86@gmail.com">tripathi.binay86@gmail.com</a></p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="ic">☎</div>
+          <div>
+            <h5>Call Us</h5>
+            <p><a href="tel:+61404723089">+61 404 723 089</a></p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="ic">⌂</div>
+          <div>
+            <h5>Address</h5>
+            <p>Ringwood, Victoria 3134, Australia</p>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" id="inquiryForm" action="https://formspree.io/f/mbdnqkez" method="POST">
+        <div class="form-row">
+          <div class="field">
+            <label for="name">Your Name</label>
+            <input id="name" name="name" type="text" placeholder="Jane Smith" required>
+          </div>
+          <div class="field">
+            <label for="org">Organisation</label>
+            <input id="org" name="organisation" type="text" placeholder="Company name">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="phone">Contact Number</label>
+            <input id="phone" name="phone" type="tel" placeholder="+61 4XX XXX XXX">
+          </div>
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input id="email" name="email" type="email" placeholder="you@company.com" required>
+          </div>
+        </div>
+        <div class="field full" style="margin-bottom:16px;">
+          <label for="sector">Area of Interest</label>
+          <select id="sector" name="area_of_interest">
+            <option>Solution Architecture</option>
+            <option>Full-Stack Engineering</option>
+            <option>Cloud &amp; DevOps</option>
+            <option>Low-Latency Systems</option>
+            <option>Applied AI &amp; ML</option>
+            <option>Process Automation</option>
+            <option>PolicyIntel / PolicyLens</option>
+            <option>General Inquiry</option>
+          </select>
+        </div>
+        <div class="field full" style="margin-bottom:0;">
+          <label for="notes">Project Notes</label>
+          <textarea id="notes" name="message" rows="3" placeholder="Tell us a little about what you're building"></textarea>
+        </div>
+        <button class="submit-btn" type="submit">Submit Inquiry</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const inquiryForm = document.getElementById('inquiryForm');
+  const formStatus = document.getElementById('formStatus');
+  inquiryForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const btn = inquiryForm.querySelector('.submit-btn');
+    const originalText = btn.textContent;
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    formStatus.textContent = '';
+    formStatus.className = 'form-status';
+
+    try {
+      const response = await fetch(inquiryForm.action, {
+        method: 'POST',
+        body: new FormData(inquiryForm),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        btn.textContent = 'Inquiry Sent ✓';
+        formStatus.textContent = "Thanks — we'll be in touch shortly.";
+        formStatus.classList.add('success');
+        inquiryForm.reset();
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (err) {
+      btn.textContent = originalText;
+      btn.disabled = false;
+      formStatus.textContent = 'Something went wrong. Please email us directly instead.';
+      formStatus.classList.add('error');
+    }
+  });
+</script>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+    <span>© 2026 Perspicacious IT Services. All Rights Reserved.</span>
+    <span class="tagline">Engineered for reliability, built with rigour.</span>
+  </div>
+</footer>
+
+<script>
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burgerBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    burgerBtn.setAttribute('aria-expanded', isOpen);
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      burgerBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
