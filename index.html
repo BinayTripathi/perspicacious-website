@@ -54,6 +54,15 @@
     font-family:'Sora', sans-serif;
   }
   .logo .mark{flex-shrink:0;}
+  .logo-text{display:flex; flex-direction:column; line-height:1.25;}
+  .logo-tagline{
+    font-family:'Inter', sans-serif;
+    font-weight:400;
+    font-size:10.5px;
+    letter-spacing:.02em;
+    color:var(--gray);
+    text-transform:none;
+  }
   .navlinks{display:flex; gap:32px; font-size:14.5px; font-weight:500;}
   .navlinks a{text-decoration:none; color:var(--text); transition:color .15s;}
   .navlinks a:hover{color:var(--rust);}
@@ -371,6 +380,7 @@
     h2{font-size:23px;}
     .eyebrow{font-size:11.5px;}
     .hero p{font-size:15px;}
+    .logo-tagline{display:none;}
   }
 </style>
 </head>
@@ -391,7 +401,10 @@
           <path d="M22 66 L22 24 L48 24 A18 18 0 0 1 48 60 L34 60" fill="none" stroke="#F6F1E7" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
           <circle cx="66" cy="66" r="5" fill="#F6F1E7"/>
         </svg>
-        PERSPICACIOUS IT SERVICES
+        <span class="logo-text">
+          PERSPICACIOUS IT SERVICES
+          <small class="logo-tagline">Engineered for reliability, built with rigour</small>
+        </span>
       </div>
       <div class="navlinks">
         <a href="#home">Home</a>
@@ -423,8 +436,8 @@
   </div>
   <div class="wrap hero-content">
     <div class="eyebrow">Available for new engagements</div>
-    <h1>Engineering <span class="accent">Reliable Software</span> for Regulated Industries</h1>
-    <p>Perspicacious IT Services bridges full-stack engineering with cloud-native solution architecture to build the low-latency systems banking, insurance and betting platforms depend on.</p>
+    <h1>Engineering <span class="accent">Reliable Software</span> for High-Stakes Industries</h1>
+    <p>Perspicacious IT Services bridges full-stack engineering with cloud-native solution architecture to build the low-latency systems banking, insurance, betting, manufacturing and construction platforms depend on.</p>
     <div class="hero-cta">
       <a href="#contact" class="btn btn-primary">Get In Touch →</a>
       <a href="#services" class="btn btn-outline">Explore Services</a>
@@ -574,8 +587,8 @@
         <div class="name">Binay Tripathi</div>
         <div class="cred">Founder &amp; Principal Engineer</div>
         <div class="divider"></div>
-        <div class="row"><span>Experience</span><span>15 years</span></div>
-        <div class="row"><span>Certification</span><span>AWS Certified Solution Architect — 958/1000</span></div>
+        <div class="row"><span>Experience</span><span>15+ years</span></div>
+        <div class="row"><span>Certification</span><span>M.Tech, AWS Certified Solution Architect</span></div>
         <div class="row" style="border-bottom:none;"><span>Based in</span><span>Ringwood, VIC</span></div>
       </div>
       <div class="about-text">
